@@ -252,3 +252,27 @@ searchInput.addEventListener("input", () => {
 
 // Inicializar display por si hay estados guardados
 updateCartDisplay();
+
+/* ==== BOTÓN FLOTANTE SOLO CUANDO EL USUARIO HACE SCROLL (OPTIMIZADO PARA SAFARI) ==== */
+
+let lastScrollPos = 0;
+
+// Función fallback para Safari (si scrollY falla usa pageYOffset)
+const getScrollY = () => window.scrollY || window.pageYOffset;
+
+window.addEventListener("scroll", () => {
+    const currentScroll = getScrollY();
+
+    // Mostrar solo cuando baja y ya pasamos 150px
+    if (currentScroll > 150 && currentScroll > lastScrollPos) {
+        cartBtn.classList.add("show-fixed");
+    }
+
+    // Si sube o vuelve arriba, que se normalice
+    if (currentScroll < lastScrollPos || currentScroll < 150) {
+        cartBtn.classList.remove("show-fixed");
+    }
+
+    lastScrollPos = currentScroll;
+});
+

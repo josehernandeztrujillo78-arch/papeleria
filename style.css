@@ -58,23 +58,29 @@ header > * {
     z-index: 1;
 }
 
-/* BOTÓN DE CARRITO */
 #cartBtn {
-    background: var(--color-accent);
-    border: none;
-    padding: 12px 18px;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-    transition: var(--transition-default);
+  background: var(--color-accent);
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 600;
+  transition: all 0.35s ease;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0); /* Fix Safari */
+  touch-action: manipulation;
+  position: relative; /* NORMAL por defecto */
 }
 
+/* Hover normal en desktop */
 #cartBtn:hover {
-    background: #f1c40f;
-    transform: scale(1.05);
+  background: #f1c40f;
+  transform: scale(1.05);
 }
 
 /* =========================
@@ -347,10 +353,6 @@ header > * {
     }
 }
 
-/* PREVIENE ZOOM AUTOMÁTICO EN IPHONE Y ANDROID */
-input, button {
-    font-size: 16px !important;
-}
 
 /* =========================
    🔍 BUSCADOR
@@ -394,4 +396,89 @@ input, button {
     border-color: #028d75;
     background: #fff;
     box-shadow: 0 4px 12px rgba(0,168,132,0.25);
+}
+
+/* ==== FIX UNIVERSAL PARA SAFARI - IOS - ANDROID ==== */
+
+/* Evita zoom automático en inputs y botones */
+input, button, select, textarea {
+  font-size: 16px !important;
+}
+
+/* Evita desplazamientos laterales en Safari */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Botón del carrito centrado y con tamaño estable en iOS */
+#cartBtn.cart-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  -webkit-transform: translateZ(0); /* Fix Safari animación */
+  transform: translateZ(0);
+  touch-action: manipulation; /* Previene delay al tocar */
+}
+
+
+/* Imagen del banner ajustada correctamente */
+.hero-banner img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+/* Contenedor del banner adaptado */
+.hero-banner {
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Corrección para que Safari no aumente el tamaño del texto */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Corrección de borde redondeado en scroll en iOS */
+:root {
+  --safe-bottom: env(safe-area-inset-bottom);
+  --safe-top: env(safe-area-inset-top);
+}
+
+/* ==== BOTÓN FLOTANTE DEL CARRITO (solo en móvil) ==== */
+
+#cartBtn {
+  transition: all 0.35s ease;
+}
+
+#cartBtn.show-fixed {
+  position: fixed;
+  bottom: calc(20px + var(--safe-area-inset-bottom, 0px));
+  right: 20px;
+  z-index: 2000;
+  background: var(--color-accent);
+  box-shadow: 0px 10px 25px rgba(0,0,0,0.25);
+  padding: 16px 22px;
+  border-radius: 50px;
+  font-size: 18px;
+}
+
+/* Icono animado */
+#cartBtn.show-fixed i {
+  transform: scale(1.1);
+}
+
+/* versión más compacta en móvil */
+@media (max-width: 650px) {
+  #cartBtn.show-fixed {
+    font-size: 15px;
+    padding: 14px 20px;
+  }
 }
