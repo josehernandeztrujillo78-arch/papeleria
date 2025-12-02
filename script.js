@@ -1,6 +1,6 @@
 // ================== VARIABLES ==================
 let cart = [];
-const phone = "521234567890"; // Cambia por tu número
+const phone = "+523313990776"; // Cambia por tu número
 
 // Elementos del DOM
 const cartSidebar = document.getElementById("cartSidebar");

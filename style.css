@@ -1,4 +1,6 @@
-/* 🔵 VARIABLES PREMIUM */
+/* =========================
+   🔵 VARIABLES PREMIUM
+========================= */
 :root {
     --font-primary: 'Poppins', sans-serif;
     --color-bg: #f7f8fa;
@@ -15,7 +17,9 @@
     --transition-default: all 0.4s cubic-bezier(.25,.8,.25,1);
 }
 
-/* 🔵 BODY */
+/* =========================
+   🔵 BODY
+========================= */
 body {
     margin: 0;
     font-family: var(--font-primary);
@@ -24,12 +28,11 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* 🔵 HEADER */
+/* =========================
+   🔵 HEADER
+========================= */
 header {
-    background-image: url('images/fondo.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: url('images/fondo.jpg') center/cover no-repeat;
     padding: 20px 40px;
     color: #fff;
     display: flex;
@@ -37,21 +40,16 @@ header {
     align-items: center;
     flex-wrap: wrap;
     box-shadow: var(--shadow-light);
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-radius: 0 0 10px 10px;
     position: relative;
 }
 
 header::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background-color: #01010a4d;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-radius: inherit;
     z-index: 0;
 }
 
@@ -60,6 +58,7 @@ header > * {
     z-index: 1;
 }
 
+/* BOTÓN DE CARRITO */
 #cartBtn {
     background: var(--color-accent);
     border: none;
@@ -70,7 +69,7 @@ header > * {
     display: flex;
     align-items: center;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: var(--transition-default);
 }
 
 #cartBtn:hover {
@@ -78,7 +77,9 @@ header > * {
     transform: scale(1.05);
 }
 
-/* 🟢 HERO */
+/* =========================
+   🟢 HERO
+========================= */
 .hero {
     text-align: center;
     padding: 60px 20px;
@@ -96,10 +97,11 @@ header > * {
 
 .hero p {
     font-size: 20px;
-    color: #fff;
 }
 
-/* 🟢 PRODUCTOS */
+/* =========================
+   🟢 PRODUCTOS
+========================= */
 .products {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -113,8 +115,7 @@ header > * {
     border-radius: 15px;
     text-align: center;
     box-shadow: var(--shadow-light);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
-    position: relative;
+    transition: 0.3s ease;
 }
 
 .product:hover {
@@ -127,10 +128,9 @@ header > * {
     max-width: 160px;
     height: 160px;
     object-fit: contain;
-    display: block;
     margin: 0 auto 15px;
     border-radius: 12px;
-    transition: transform 0.3s ease;
+    transition: 0.3s ease;
 }
 
 .product img:hover {
@@ -162,40 +162,55 @@ header > * {
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
-    transition: all 0.3s ease;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    transition: var(--transition-default);
+    margin-inline: auto;
 }
 
 .product button:hover {
     background: #1a4dc4;
     transform: translateY(-3px) scale(1.05);
 }
-/* 🟣 CARRITO DESLIZANTE */
+
+/* =========================
+   🟣 CARRITO DESLIZANTE
+========================= */
+/* ===============================
+   🟣 CARRITO UNIVERSAL MOBILE-FRIENDLY
+================================ */
+
 .cart-sidebar {
     position: fixed;
     top: 0;
     right: -100%;
-    width: 100vw;
+
+    /* Altura compatible con TODOS los móviles */
+    height: 100vh;       /* fallback */
+    height: 100svh;      /* iPhone Safari */
+    height: 100lvh;      /* Android moderno */
+
+    width: 100%;
     max-width: 420px;
+
     background: white;
-    height: 100dvh !important;
-    max-height: 100dvh !important;
     box-shadow: -3px 0 25px rgba(0,0,0,0.2);
     transition: right 0.4s ease;
     z-index: 1000;
+
     padding: 20px;
     display: flex;
     flex-direction: column;
-    overflow-y: auto !important;    /* 🔥 FIX: permite scroll real */
+
+    overflow-y: auto; /* scroll real */
 }
 
 .cart-sidebar.active {
     right: 0;
 }
 
-/* 🔵 HEADER */
+/* ===============================
+   🟣 HEADER DEL CARRITO
+================================ */
+
 .cart-header {
     display: flex;
     justify-content: space-between;
@@ -207,22 +222,30 @@ header > * {
     font-size: 28px;
     cursor: pointer;
     color: var(--color-danger);
-    transition: transform 0.2s;
+    transition: 0.2s;
 }
 
 .cart-header .close:hover {
     transform: rotate(90deg);
 }
 
-/* 🔵 LISTA */
+/* ===============================
+   🟣 LISTA DEL CARRITO
+================================ */
+
 #cartList {
     flex: 1;
     overflow-y: auto;
     padding-right: 5px;
-    padding-bottom: 140px !important;  /* 🔥 NECESARIO para que no tape el footer */
+
+    /* espacio real para que NO tape el footer */
+    padding-bottom: 190px;
 }
 
-/* 🔵 ITEMS */
+/* ===============================
+   🟣 ITEMS
+================================ */
+
 #cartList li {
     display: flex;
     justify-content: space-between;
@@ -232,7 +255,7 @@ header > * {
     flex-wrap: wrap;
 }
 
-#cartList li span.product-info {
+#cartList li .product-info {
     flex: 1;
     margin-right: 12px;
     display: flex;
@@ -240,24 +263,24 @@ header > * {
     word-break: break-word;
 }
 
-#cartList li span.product-info .name {
+#cartList li .name {
     font-weight: 700;
     font-size: 16px;
     color: var(--color-primary);
 }
 
-#cartList li span.product-info .price {
+#cartList li .price {
     font-size: 14px;
     color: #555;
 }
 
-/* 🔵 BOTONES CANTIDAD */
-#cartList li .quantity-buttons {
+/* BOTONES DE CANTIDAD */
+.quantity-buttons {
     display: flex;
     gap: 6px;
 }
 
-#cartList li .quantity-buttons button {
+.quantity-buttons button {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -268,27 +291,32 @@ header > * {
     cursor: pointer;
 }
 
-/* ⭐ FOOTER FIJO */
+/* ================================
+      ⭐ FOOTER FIJO MOBILE-FRIENDLY
+================================ */
+
 .cart-footer-fixed {
-    position: fixed;        /* 🔥 FIX REAL */
+    position: sticky; /* ← funciona perfecto en cualquier teléfono */
     bottom: 0;
     left: 0;
     right: 0;
 
-    max-width: 420px;      /* para pantallas grandes */
-    width: 100vw;
+    width: 100%;
+    max-width: inherit;
 
-    margin: 0 auto;
     background: white;
     padding: 15px 20px;
+
     box-shadow: 0 -5px 15px rgba(0,0,0,0.15);
+
     display: flex;
     flex-direction: column;
     gap: 12px;
+
     z-index: 2000;
 }
 
-/* 🔵 WHATSAPP */
+/* BOTÓN WHATSAPP */
 .whatsappBtn {
     background: var(--color-whatsapp);
     width: 100%;
@@ -312,19 +340,25 @@ header > * {
     border-radius: 8px;
 }
 
-/* 🔹 RESPONSIVE */
+/* ================================
+   🔹 RESPONSIVE FULL MOBILE WIDTH
+================================ */
 @media (max-width: 700px) {
-    .cart-sidebar {
-        width: 100vw !important;
-        max-width: 100vw !important;
-    }
+    .cart-sidebar,
     .cart-footer-fixed {
-        width: 100vw !important;
-        max-width: 100vw !important;
+        width: 100% !important;
+        max-width: 100% !important;
     }
 }
 
-/* Contenedor centrado */
+/* PREVIENE ZOOM AUTOMÁTICO EN IPHONE Y ANDROID */
+input, button {
+    font-size: 16px !important;
+}
+
+/* =========================
+   🔍 BUSCADOR
+========================= */
 .search {
     width: 100%;
     padding: 20px 0;
@@ -332,14 +366,12 @@ header > * {
     justify-content: center;
 }
 
-/* Contenedor del input + icono */
 .search-box {
     position: relative;
     width: 90%;
     max-width: 500px;
 }
 
-/* Ícono dentro del input */
 .search-box i {
     position: absolute;
     left: 16px;
@@ -350,10 +382,9 @@ header > * {
     pointer-events: none;
 }
 
-/* Input elegante */
 .search-box input {
     width: 100%;
-    padding: 14px 18px 14px 50px; /* espacio para el icono */
+    padding: 14px 18px 14px 50px;
     border-radius: 12px;
     border: 2px solid #00a884;
     background: #fdfdfd;
@@ -362,7 +393,6 @@ header > * {
     transition: 0.25s ease;
 }
 
-/* Focus */
 .search-box input:focus {
     outline: none;
     border-color: #028d75;
