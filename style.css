@@ -174,10 +174,6 @@ header > * {
 /* =========================
    🟣 CARRITO DESLIZANTE
 ========================= */
-/* ===============================
-   🟣 CARRITO UNIVERSAL MOBILE-FRIENDLY
-================================ */
-
 .cart-sidebar {
     position: fixed;
     top: 0;
@@ -239,7 +235,7 @@ header > * {
     padding-right: 5px;
 
     /* espacio real para que NO tape el footer */
-    padding-bottom: 190px;
+    padding-bottom: 160px; /* ajustado */
 }
 
 /* ===============================
