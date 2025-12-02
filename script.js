@@ -132,29 +132,58 @@ clearCartBtn.addEventListener("click", () => {
 });
 
 // ================== BUSCADOR ==================
+// Función para quitar tildes
+function normalizeText(text) {
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+// Guardamos el texto original de cada h3 una sola vez
+products.forEach(product => {
+    const nameEl = product.querySelector("h3");
+    nameEl.dataset.original = nameEl.innerText;
+    nameEl.dataset.normalized = normalizeText(nameEl.innerText.toLowerCase());
+});
+
 searchInput.addEventListener("input", () => {
-    const query = searchInput.value.toLowerCase();
+    const query = normalizeText(searchInput.value.toLowerCase());
 
     products.forEach(product => {
         const nameEl = product.querySelector("h3");
-        const name = nameEl.innerText.toLowerCase();
 
-        if (name.includes(query) && query !== "") {
-            const regex = new RegExp(`(${query})`, "gi");
-            nameEl.innerHTML = nameEl.innerText.replace(regex, '<mark>$1</mark>');
+        const original = nameEl.dataset.original;
+        const normalized = nameEl.dataset.normalized;
+
+        if (query !== "" && normalized.includes(query)) {
+
+            // Resaltado
+            const regex = new RegExp(query, "gi");
+            let highlighted = original.replace(regex, match => `<mark>${match}</mark>`);
+            nameEl.innerHTML = highlighted;
+
+            // ⭐ PRODUCTO COINCIDENTE → SE MUESTRA Y SUBE
+            product.style.display = "block";   // visible
+            product.style.order = "0";         // arriba
             product.style.opacity = "1";
             product.style.transform = "scale(1)";
             product.style.pointerEvents = "auto";
+
         } else if (query === "") {
-            nameEl.innerHTML = nameEl.innerText;
+
+            // Restaurar cuando no hay búsqueda
+            nameEl.innerHTML = original;
+
+            product.style.display = "block";   // mostrar todos
+            product.style.order = "1";
             product.style.opacity = "1";
             product.style.transform = "scale(1)";
             product.style.pointerEvents = "auto";
+
         } else {
-            nameEl.innerHTML = nameEl.innerText;
-            product.style.opacity = "0";
-            product.style.transform = "scale(0.95)";
-            product.style.pointerEvents = "none";
+
+            // ⭐ PRODUCTO NO COINCIDENTE → OCULTAR
+            nameEl.innerHTML = original;
+            product.style.display = "none";    // oculto
+            product.style.order = "2";
         }
     });
 });
