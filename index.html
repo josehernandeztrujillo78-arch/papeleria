@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Papelería Moderna</title>
+
+    <!-- CSS local -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <h1><i class="fas fa-pencil-alt"></i> Papelería Moderna</h1>
+        </div>
+        <button id="cartBtn">
+            <i class="fas fa-shopping-cart"></i> Carrito (<span id="cartCount">0</span>)
+        </button>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h2>Todo lo que necesitas para tu oficina y estudio</h2>
+        <p>Productos de calidad, entrega rápida y atención personalizada.</p>
+    </section>
+
+    <!-- BUSCADOR -->
+    <section class="search">
+        <input type="text" id="searchInput" placeholder="Buscar producto..." />
+    </section>
+
+    <!-- PRODUCTOS -->
+    <section class="products">
+
+        <div class="product">
+            <img src="images/cuaderno.jpg" alt="Cuaderno">
+            <h3>Cuaderno Profesional</h3>
+            <p>$45</p>
+            <div class="quantity">
+                <label>Cantidad: </label>
+                <input type="number" min="0" value="0" class="qty">
+            </div>
+            <button class="addToCartBtn">
+                <i class="fas fa-cart-plus"></i> Agregar
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="images/plumas.jpeg" alt="Pluma">
+            <h3>Lapiceros</h3>
+            <p>$12</p>
+
+            <div class="options">
+                <label>Color: </label>
+                <select class="color">
+                    <option value="Azul">Azul</option>
+                    <option value="Negro">Negro</option>
+                    <option value="Rojo">Rojo</option>
+                    <option value="verde">verde</option>
+                </select>
+            </div>
+
+            <div class="quantity">
+                <label>Cantidad: </label>
+                <input type="number" min="0" value="0" class="qty">
+            </div>
+
+            <button class="addToCartBtn">
+                <i class="fas fa-cart-plus"></i> Agregar
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="images/colores.jpg" alt="Colores">
+            <h3>Colores 24 pzs</h3>
+            <p>$75</p>
+            <div class="quantity">
+                <label>Cantidad: </label>
+                <input type="number" min="0" value="0" class="qty">
+            </div>
+            <button class="addToCartBtn">
+                <i class="fas fa-cart-plus"></i> Agregar
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="images/marcadores.jpg" alt="Pluma">
+            <h3>Marcadores</h3>
+            <p>$65</p>
+
+            <div class="options">
+                <label>Color: </label>
+                <select class="color">
+                    <option value="Azul">Azul</option>
+                    <option value="Negro">Negro</option>
+                    <option value="Rojo">Rojo</option>
+                    <option value="verde">verde</option>
+                </select>
+            </div>
+
+            <div class="quantity">
+                <label>Cantidad: </label>
+                <input type="number" min="0" value="0" class="qty">
+            </div>
+
+            <button class="addToCartBtn">
+                <i class="fas fa-cart-plus"></i> Agregar
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="images/sacapuntas.jpg" alt="Cuaderno">
+            <h3>Sacapuntas</h3>
+            <p>$45</p>
+            <div class="quantity">
+                <label>Cantidad: </label>
+                <input type="number" min="0" value="0" class="qty">
+            </div>
+            <button class="addToCartBtn">
+                <i class="fas fa-cart-plus"></i> Agregar
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="images/borrador.jpg" alt="Cuaderno">
+            <h3>Borrador</h3>
+            <p>$45</p>
+            <div class="quantity">
+                <label>Cantidad: </label>
+                <input type="number" min="0" value="0" class="qty">
+            </div>
+            <button class="addToCartBtn">
+                <i class="fas fa-cart-plus"></i> Agregar
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="images/lapiz.jpg" alt="Cuaderno">
+            <h3>Lapiz</h3>
+            <p>$45</p>
+            <div class="quantity">
+                <label>Cantidad: </label>
+                <input type="number" min="0" value="0" class="qty">
+            </div>
+            <button class="addToCartBtn">
+                <i class="fas fa-cart-plus"></i> Agregar
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="images/corrector.jpg" alt="Cuaderno">
+            <h3>Corrector</h3>
+            <p>$45</p>
+            <div class="quantity">
+                <label>Cantidad: </label>
+                <input type="number" min="0" value="0" class="qty">
+            </div>
+            <button class="addToCartBtn">
+                <i class="fas fa-cart-plus"></i> Agregar
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="images/marcatexto.jpg" alt="Cuaderno">
+            <h3>Marcatextos</h3>
+            <p>$45</p>
+            <div class="quantity">
+                <label>Cantidad: </label>
+                <input type="number" min="0" value="0" class="qty">
+            </div>
+            <button class="addToCartBtn">
+                <i class="fas fa-cart-plus"></i> Agregar
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="images/calculadora.jpg" alt="Cuaderno">
+            <h3>Calculadora</h3>
+            <p>$45</p>
+            <div class="quantity">
+                <label>Cantidad: </label>
+                <input type="number" min="0" value="0" class="qty">
+            </div>
+            <button class="addToCartBtn">
+                <i class="fas fa-cart-plus"></i> Agregar
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="images/tijeras.jpg" alt="Cuaderno">
+            <h3>Tijeras</h3>
+            <p>$45</p>
+            <div class="quantity">
+                <label>Cantidad: </label>
+                <input type="number" min="0" value="0" class="qty">
+            </div>
+            <button class="addToCartBtn">
+                <i class="fas fa-cart-plus"></i> Agregar
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="images/geometria.jpg" alt="Cuaderno">
+            <h3>Juego de geometria</h3>
+            <p>$45</p>
+            <div class="quantity">
+                <label>Cantidad: </label>
+                <input type="number" min="0" value="0" class="qty">
+            </div>
+            <button class="addToCartBtn">
+                <i class="fas fa-cart-plus"></i> Agregar
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="images/resistol.jpg" alt="Cuaderno">
+            <h3>Resitol</h3>
+            <p>$45</p>
+            <div class="quantity">
+                <label>Cantidad: </label>
+                <input type="number" min="0" value="0" class="qty">
+            </div>
+            <button class="addToCartBtn">
+                <i class="fas fa-cart-plus"></i> Agregar
+            </button>
+        </div>
+
+    </section>
+
+    <!-- CARRITO DESLIZANTE -->
+    <div id="cartSidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2><i class="fas fa-shopping-cart"></i> Tu Carrito</h2>
+            <span id="closeCart" class="close">&times;</span>
+        </div>
+
+        <ul id="cartList"></ul>
+
+        <!-- Botón vaciar carrito -->
+        <button id="clearCartBtn" class="clearCartBtn">
+            <i class="fas fa-trash"></i> Vaciar carrito
+        </button>
+
+        <h3>Total: $<span id="total">0</span></h3>
+
+        <a id="sendWhatsapp" target="_blank">
+            <button class="whatsappBtn">
+                <i class="fab fa-whatsapp"></i> Enviar pedido por WhatsApp
+            </button>
+        </a>
+    </div>
+
+    <!-- JS local -->
+    <script src="script.js"></script>
+
+</body>
+</html>
