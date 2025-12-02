@@ -31,8 +31,12 @@
 
     <!-- BUSCADOR -->
     <section class="search">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
         <input type="text" id="searchInput" placeholder="Buscar producto..." />
-    </section>
+    </div>
+</section>
+
 
     <!-- PRODUCTOS -->
     <section class="products">
@@ -232,21 +236,26 @@
 
     </section>
 
+    
     <!-- CARRITO DESLIZANTE -->
-    <div id="cartSidebar" class="cart-sidebar">
-        <div class="cart-header">
-            <h2><i class="fas fa-shopping-cart"></i> Tu Carrito</h2>
-            <span id="closeCart" class="close">&times;</span>
-        </div>
+<div id="cartSidebar" class="cart-sidebar">
 
+    <div class="cart-header">
+        <h2><i class="fas fa-shopping-cart"></i> Tu Carrito</h2>
+        <span id="closeCart" class="close">&times;</span>
+    </div>
+
+    <!-- ⭐ CONTENEDOR QUE SCROLLEA ⭐ -->
+    <div class="cart-content">
         <ul id="cartList"></ul>
+        <h3>Total: $<span id="total">0</span></h3>
+    </div>
 
-        <!-- Botón vaciar carrito -->
+    <!-- ⭐ FOOTER FIJO SIEMPRE VISIBLE ⭐ -->
+    <div class="cart-footer">
         <button id="clearCartBtn" class="clearCartBtn">
             <i class="fas fa-trash"></i> Vaciar carrito
         </button>
-
-        <h3>Total: $<span id="total">0</span></h3>
 
         <a id="sendWhatsapp" target="_blank">
             <button class="whatsappBtn">
@@ -254,6 +263,9 @@
             </button>
         </a>
     </div>
+
+</div>
+
 
     <!-- JS local -->
     <script src="script.js"></script>
