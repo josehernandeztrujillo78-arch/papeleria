@@ -1,260 +1,193 @@
 // ================== VARIABLES ==================
-let cart = [];
+let cart = JSON.parse(localStorage.getItem("carrito")) || [];
+let productosJSON = [];
 let cantidadesPrevias = {};
-const phone = "+523313990776"; // deja el formato internacional; lo saneamos en JS
+const phone = "+523313990776"; // formato internacional
 
-// Elementos del DOM
-const cartSidebar = document.getElementById("cartSidebar");
-const cartBtn = document.getElementById("cartBtn");
-const closeCart = document.getElementById("closeCart");
-const cartList = document.getElementById("cartList");
-const totalEl = document.getElementById("total");
+// ================== ELEMENTOS DEL DOM ==================
 const cartCountEl = document.getElementById("cartCount");
-const sendWhatsapp = document.getElementById("sendWhatsapp");
-const clearCartBtn = document.getElementById("clearCartBtn");
 const searchInput = document.getElementById("searchInput");
-const products = document.querySelectorAll(".product");
+const productsContainer = document.querySelector(".products");
 
-// Sanitizar teléfono para wa.me (solo dígitos)
+// ================== UTILIDADES ==================
+// Limpiar teléfono
 function sanitizePhone(ph) {
   return ph.replace(/\D/g, "");
 }
 const phoneClean = sanitizePhone(phone);
 
-// ================== FUNCIONES ==================
-
-// Abrir / cerrar carrito
-function openCart() {
-  cartSidebar.classList.add("active");
-  cartSidebar.setAttribute("aria-hidden", "false");
-  cartBtn.setAttribute("aria-expanded", "true");
+// Normalizar texto para búsqueda
+function normalizeText(text){
+  return text.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 }
 
-function closeCartFn() {
-  cartSidebar.classList.remove("active");
-  cartSidebar.setAttribute("aria-hidden", "true");
-  cartBtn.setAttribute("aria-expanded", "false");
-}
+// ================== CARGA DE PRODUCTOS ==================
+function cargarProductos() {
+  productsContainer.innerHTML = "";
 
-cartBtn.addEventListener("click", () => {
-  if (cartSidebar.classList.contains("active")) closeCartFn();
-  else openCart();
-});
+  productosJSON.forEach(prod => {
+    const div = document.createElement("div");
+    div.classList.add("product");
 
-closeCart.addEventListener("click", closeCartFn);
-
-// Cerrar al hacer clic fuera del sidebar
-window.addEventListener("click", (e) => {
-  if (cartSidebar.contains(e.target) || cartBtn.contains(e.target)) return;
-  if (cartSidebar.classList.contains("active")) closeCartFn();
-});
-
-// ================== CARRITO ==================
-products.forEach((product) => {
-  const addBtn = product.querySelector(".addToCartBtn");
-  const qtyInput = product.querySelector(".qty");
-  const colorSelect = product.querySelector(".color");
-
-  // Sincronizar cambios de color
-  if (colorSelect) {
-    colorSelect.addEventListener("change", () => {
-      const item = product.querySelector("h3").innerText.trim();
-      const color = colorSelect.value;
-      const key = item + ` (${color})`;
-
-      if (cantidadesPrevias[key] !== undefined) {
-        qtyInput.value = cantidadesPrevias[key];
-      } else {
-        qtyInput.value = 0;
-      }
-
-      qtyInput.dispatchEvent(new Event("input", { bubbles: true }));
-    });
-  }
-
-  // Botón agregar al carrito
-  addBtn.addEventListener("click", () => {
-    const item = product.querySelector("h3").innerText.trim();
-    const price = parseFloat(product.querySelector("p").innerText.replace("$", "")) || 0;
-    const color = colorSelect ? colorSelect.value : "";
-    const key = item + (color ? ` (${color})` : "");
-
-    let existing = cart.find((p) => p.key === key);
-
-    if (!existing) {
-      cart.push({ key, item, color, price, qty: 0 });
-      existing = cart.find((p) => p.key === key);
+    // Opciones de color
+    let colorHTML = "";
+    if (Array.isArray(prod.colores) && prod.colores.length > 0) {
+      colorHTML = `<div class="options">
+        <label>Color: </label>
+        <select class="color">
+          ${prod.colores.map(c => `<option value="${c}">${c}</option>`).join("")}
+        </select>
+      </div>`;
     }
 
-    existing.qty += 1;
-    qtyInput.value = existing.qty;
-
-    cart = cart.filter((i) => i.qty > 0);
-    updateCartDisplay();
-  });
-
-  // Sincronizar input manual
-  qtyInput.addEventListener("input", () => {
-    const item = product.querySelector("h3").innerText.trim();
-    const price = parseFloat(product.querySelector("p").innerText.replace("$", "")) || 0;
-    const color = colorSelect ? colorSelect.value : "";
-    const key = item + (color ? ` (${color})` : "");
-
-    cantidadesPrevias[key] = qtyInput.value;
-
-    let existing = cart.find((p) => p.key === key);
-    let newQty = parseInt(qtyInput.value, 10);
-    if (isNaN(newQty) || newQty < 0) newQty = 0;
-
-    if (!existing) {
-      if (newQty > 0) cart.push({ key, item, color, price, qty: newQty });
-    } else {
-      existing.qty = newQty;
-    }
-
-    cart = cart.filter((i) => i.qty > 0);
-    updateCartDisplay();
-  });
-});
-
-// ================== ACTUALIZAR CARRITO ==================
-function updateCartDisplay() {
-  cart = cart.filter((p) => p.qty > 0);
-
-  cartList.innerHTML = "";
-  let total = 0;
-
-  cart.forEach((p, index) => {
-    total += p.price * p.qty;
-
-    const li = document.createElement("li");
-    li.dataset.index = index;
-
-    const lineTotal = (p.price * p.qty).toFixed(2);
-    const unit = p.price.toFixed(2);
-
-    li.innerHTML = `
-      <span class="product-info">
-        <span class="name">${p.key}</span>
-        <span class="price">$${unit} c/u — <strong>$${lineTotal}</strong></span>
-      </span>
-      <span class="quantity-buttons" role="group" aria-label="Controles cantidad">
-        <button class="changeQtyBtn" data-delta="-1" aria-label="Restar cantidad">-</button>
-        <span style="min-width:28px;display:inline-block;text-align:center;">${p.qty}</span>
-        <button class="changeQtyBtn" data-delta="1" aria-label="Sumar cantidad">+</button>
-      </span>
+    div.innerHTML = `
+      <img src="${prod.imagen}" alt="${prod.nombre}">
+      <h3>${prod.nombre}</h3>
+      <p>$${prod.precio || 0}</p>
+      ${colorHTML}
+      <div class="quantity">
+        <label>Cantidad: </label>
+        <input type="number" min="0" value="0" class="qty" inputmode="numeric">
+      </div>
+      <button class="addToCartBtn" aria-label="Agregar ${prod.nombre} al carrito">
+        <i class="fas fa-cart-plus"></i> Agregar
+      </button>
     `;
-    cartList.appendChild(li);
+    productsContainer.appendChild(div);
   });
 
-  totalEl.innerText = total.toFixed(2);
-  cartCountEl.innerText = cart.reduce((sum, p) => sum + p.qty, 0);
-
-  // Sincronizar inputs
-  products.forEach((prod) => {
-    const name = prod.querySelector("h3").innerText.trim();
-    const colorSelect = prod.querySelector(".color");
-    const color = colorSelect ? colorSelect.value : "";
-    const key = name + (color ? ` (${color})` : "");
-    const existing = cart.find((item) => item.key === key);
-    prod.querySelector(".qty").value = existing ? existing.qty : 0;
-  });
-
-  // Preparar WhatsApp
-  if (cart.length === 0) {
-    sendWhatsapp.href = `https://wa.me/${phoneClean}`;
-  } else {
-    let msg = "Hola! Me gustaría pedir:\n";
-    cart.forEach((p) => {
-      msg += `- ${p.key} x${p.qty} ($${p.price.toFixed(2)} c/u) - $${(p.price * p.qty).toFixed(2)}\n`;
-    });
-    msg += `Total: $${total.toFixed(2)}`;
-    sendWhatsapp.href = `https://wa.me/${phoneClean}?text=${encodeURIComponent(msg)}`;
-  }
+  sincronizarCantidades();
 }
 
-// ================== CONTROLES DEL CARRITO ==================
-cartList.addEventListener("click", (e) => {
-  if (e.target.classList.contains("changeQtyBtn")) {
-    const li = e.target.closest("li");
-    const index = parseInt(li.dataset.index, 10);
-    const delta = parseInt(e.target.dataset.delta, 10);
+// ================== FUNCIONES DE CARRITO ==================
+function actualizarContador() {
+  cartCountEl.innerText = cart.reduce((s,p)=>s+p.qty,0);
+  localStorage.setItem("carrito", JSON.stringify(cart));
+}
 
-    if (Number.isFinite(index) && cart[index]) {
-      cart[index].qty += delta;
-      if (cart[index].qty <= 0) cart.splice(index, 1);
-      updateCartDisplay();
-    }
+// Sincroniza las cantidades visibles con el carrito
+function sincronizarCantidades() {
+  document.querySelectorAll(".product").forEach(prod => {
+    const nombre = prod.querySelector("h3").innerText.trim();
+    const colorSelect = prod.querySelector(".color");
+    const key = nombre + (colorSelect ? ` (${colorSelect.value})` : "");
+
+    if (!(key in cantidadesPrevias)) cantidadesPrevias[key] = 0;
+
+    const existing = cart.find(p => p.key === key);
+    prod.querySelector(".qty").value = existing ? existing.qty : cantidadesPrevias[key] || 0;
+  });
+
+  actualizarContador();
+}
+
+// ================== MANEJO DE PRODUCTOS ==================
+function agregarAlCarrito(productEl) {
+  const qtyInput = productEl.querySelector(".qty");
+  const colorSelect = productEl.querySelector(".color");
+  const nombre = productEl.querySelector("h3").innerText.trim();
+  const price = parseFloat(productEl.querySelector("p").innerText.replace("$","")) || 0;
+  const key = nombre + (colorSelect ? ` (${colorSelect.value})` : "");
+
+  let existing = cart.find(p => p.key === key);
+  if (!existing) {
+    cart.push({ key, item: nombre, color: colorSelect ? colorSelect.value : "", price, qty: 0 });
+    existing = cart.find(p => p.key === key);
+  }
+  existing.qty += 1;
+  cantidadesPrevias[key] = existing.qty;
+  qtyInput.value = existing.qty;
+
+  actualizarContador();
+}
+
+// Maneja cambios manuales de cantidad
+function actualizarCantidad(productEl) {
+  const qtyInput = productEl.querySelector(".qty");
+  const colorSelect = productEl.querySelector(".color");
+  const nombre = productEl.querySelector("h3").innerText.trim();
+  const price = parseFloat(productEl.querySelector("p").innerText.replace("$","")) || 0;
+  const key = nombre + (colorSelect ? ` (${colorSelect.value})` : "");
+
+  let qty = Math.max(0, parseInt(qtyInput.value,10) || 0);
+  cantidadesPrevias[key] = qty;
+
+  let existing = cart.find(p => p.key === key);
+  if (!existing && qty > 0) {
+    cart.push({ key, item: nombre, color: colorSelect ? colorSelect.value : "", price, qty });
+  } else if (existing) {
+    existing.qty = qty;
+  }
+
+  // Eliminar productos con qty=0
+  cart = cart.filter(p => p.qty > 0);
+  actualizarContador();
+}
+
+// Maneja cambio de color
+function cambiarColor(productEl) {
+  const qtyInput = productEl.querySelector(".qty");
+  const colorSelect = productEl.querySelector(".color");
+  const nombre = productEl.querySelector("h3").innerText.trim();
+  const key = nombre + ` (${colorSelect.value})`;
+
+  if (!(key in cantidadesPrevias)) cantidadesPrevias[key] = 0;
+  qtyInput.value = cantidadesPrevias[key];
+
+  qtyInput.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
+// ================== EVENTOS ==================
+productsContainer.addEventListener("click", e => {
+  if (e.target.closest(".addToCartBtn")) {
+    const productEl = e.target.closest(".product");
+    agregarAlCarrito(productEl);
   }
 });
 
-// Vaciar carrito
-clearCartBtn.addEventListener("click", () => {
-  cart = [];
-  products.forEach((prod) => (prod.querySelector(".qty").value = 0));
-  updateCartDisplay();
+productsContainer.addEventListener("input", e => {
+  if (e.target.classList.contains("qty")) {
+    const productEl = e.target.closest(".product");
+    actualizarCantidad(productEl);
+  }
+});
+
+productsContainer.addEventListener("change", e => {
+  if (e.target.classList.contains("color")) {
+    const productEl = e.target.closest(".product");
+    cambiarColor(productEl);
+  }
 });
 
 // ================== BUSCADOR ==================
-function normalizeText(text) {
-  return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-}
-
-products.forEach((product) => {
-  const nameEl = product.querySelector("h3");
-  nameEl.dataset.original = nameEl.innerText;
-  nameEl.dataset.normalized = normalizeText(nameEl.innerText.toLowerCase());
-});
-
-searchInput.addEventListener("input", () => {
-  const query = normalizeText(searchInput.value.toLowerCase()).trim();
-
-  products.forEach((product) => {
+function buscarProductos(){
+  const query = normalizeText(searchInput.value.toLowerCase().trim());
+  document.querySelectorAll(".product").forEach(product=>{
     const nameEl = product.querySelector("h3");
-    const original = nameEl.dataset.original;
-    const normalized = nameEl.dataset.normalized;
+    const original = nameEl.innerText;
+    const normalized = normalizeText(original.toLowerCase());
 
-    if (query !== "" && normalized.includes(query)) {
-      const regex = new RegExp(query, "gi");
-      let highlighted = original.replace(regex, (match) => `<mark>${match}</mark>`);
-      nameEl.innerHTML = highlighted;
-
+    if(query && normalized.includes(query)){
+      nameEl.innerHTML = original.replace(new RegExp(query,"gi"), match => `<mark>${match}</mark>`);
       product.style.display = "block";
-      product.style.order = "0";
-      product.style.opacity = "1";
-      product.style.transform = "scale(1)";
-      product.style.pointerEvents = "auto";
-    } else if (query === "") {
+    } else if(!query){
       nameEl.innerHTML = original;
       product.style.display = "block";
-      product.style.order = "1";
-      product.style.opacity = "1";
-      product.style.transform = "scale(1)";
-      product.style.pointerEvents = "auto";
     } else {
       nameEl.innerHTML = original;
       product.style.display = "none";
-      product.style.order = "2";
     }
   });
-});
+}
+searchInput.addEventListener("input", buscarProductos);
 
-// Inicializar display
-updateCartDisplay();
+// ================== INICIALIZAR ==================
+fetch(`productos.json?cacheBust=${Date.now()}`)
+  .then(res => res.json())
+  .then(data => {
+    productosJSON = data;
+    cargarProductos();
+  })
+  .catch(err => console.error("Error cargando productos:", err));
 
-// Botón flotante
-let lastScrollPos = 0;
-const getScrollY = () => window.scrollY || window.pageYOffset;
-
-window.addEventListener("scroll", () => {
-  const currentScroll = getScrollY();
-
-  if (currentScroll > 150 && currentScroll > lastScrollPos) {
-    cartBtn.classList.add("show-fixed");
-  }
-  if (currentScroll < lastScrollPos || currentScroll < 150) {
-    cartBtn.classList.remove("show-fixed");
-  }
-
-  lastScrollPos = currentScroll;
-});
+actualizarContador();

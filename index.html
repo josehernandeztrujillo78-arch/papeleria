@@ -3,9 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-
     <title>Papelería Moderna</title>
 
     <!-- Google Fonts (Poppins) -->
@@ -19,261 +16,41 @@
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <div class="logo">
-            <h1><i class="fas fa-pencil-alt" aria-hidden="true"></i> Papelería Moderna</h1>
-        </div>
-        <button id="cartBtn" class="cart-button" aria-controls="cartSidebar" aria-expanded="false">
-            <i class="fas fa-shopping-cart" aria-hidden="true"></i> Carrito (<span id="cartCount">0</span>)
-        </button>
-    </header>
-
-    <!-- HERO -->
-    <section class="hero">
-        <h2>Todo lo que necesitas para tu oficina y estudio</h2>
-        <p>Productos de calidad, entrega rápida y atención personalizada.</p>
-    </section>
-
-    <!-- BUSCADOR -->
-    <section class="search">
-        <div class="search-box">
-            <i class="fas fa-search" aria-hidden="true"></i>
-            <input type="text" id="searchInput" placeholder="Buscar producto..." aria-label="Buscar producto" />
-        </div>
-    </section>
-
-    <!-- PRODUCTOS -->
-    <section class="products">
-
-        <div class="product">
-            <img src="images/cuaderno.jpg" alt="Cuaderno profesional con espiral">
-            <h3>Cuaderno Profesional</h3>
-            <p>$45</p>
-            <div class="quantity">
-                <label for="">Cantidad: </label>
-                <input type="number" min="0" value="0" class="qty" inputmode="numeric">
-            </div>
-            <button class="addToCartBtn">
-                <i class="fas fa-cart-plus" aria-hidden="true"></i> Agregar
-            </button>
-        </div>
-
-        <div class="product">
-            <img src="images/plumas.jpeg" alt="Lapiceros varios colores">
-            <h3>Lapiceros</h3>
-            <p>$12</p>
-
-            <div class="options">
-                <label>Color: </label>
-                <select class="color">
-                    <option value="Azul">Azul</option>
-                    <option value="Negro">Negro</option>
-                    <option value="Rojo">Rojo</option>
-                    <option value="Verde">Verde</option>
-                </select>
-            </div>
-
-            <div class="quantity">
-                <label for="">Cantidad: </label>
-                <input type="number" min="0" value="0" class="qty" inputmode="numeric">
-            </div>
-
-            <button class="addToCartBtn">
-                <i class="fas fa-cart-plus" aria-hidden="true"></i> Agregar
-            </button>
-        </div>
-
-        <div class="product">
-            <img src="images/colores.jpg" alt="Caja de 24 colores">
-            <h3>Colores 24 pzs</h3>
-            <p>$75</p>
-            <div class="quantity">
-                <label for="">Cantidad: </label>
-                <input type="number" min="0" value="0" class="qty" inputmode="numeric">
-            </div>
-            <button class="addToCartBtn">
-                <i class="fas fa-cart-plus" aria-hidden="true"></i> Agregar
-            </button>
-        </div>
-
-
-        <div class="product">
-            <img src="images/marcadores.jpg" alt="Pluma">
-            <h3>Marcadores</h3>
-            <p>$65</p>
-
-            <div class="options">
-                <label>Color: </label>
-                <select class="color">
-                    <option value="Azul">Azul</option>
-                    <option value="Negro">Negro</option>
-                    <option value="Rojo">Rojo</option>
-                    <option value="verde">verde</option>
-                </select>
-            </div>
-
-            <div class="quantity">
-                <label>Cantidad: </label>
-                <input type="number" min="0" value="0" class="qty">
-            </div>
-
-            <button class="addToCartBtn">
-                <i class="fas fa-cart-plus"></i> Agregar
-            </button>
-        </div>
-
-        <div class="product">
-            <img src="images/sacapuntas.jpg" alt="Cuaderno">
-            <h3>Sacapuntas</h3>
-            <p>$45</p>
-            <div class="quantity">
-                <label>Cantidad: </label>
-                <input type="number" min="0" value="0" class="qty">
-            </div>
-            <button class="addToCartBtn">
-                <i class="fas fa-cart-plus"></i> Agregar
-            </button>
-        </div>
-
-        <div class="product">
-            <img src="images/borrador.jpg" alt="Cuaderno">
-            <h3>Borrador</h3>
-            <p>$45</p>
-            <div class="quantity">
-                <label>Cantidad: </label>
-                <input type="number" min="0" value="0" class="qty">
-            </div>
-            <button class="addToCartBtn">
-                <i class="fas fa-cart-plus"></i> Agregar
-            </button>
-        </div>
-
-        <div class="product">
-            <img src="images/lapiz.jpg" alt="Cuaderno">
-            <h3>Lapiz</h3>
-            <p>$45</p>
-            <div class="quantity">
-                <label>Cantidad: </label>
-                <input type="number" min="0" value="0" class="qty">
-            </div>
-            <button class="addToCartBtn">
-                <i class="fas fa-cart-plus"></i> Agregar
-            </button>
-        </div>
-
-        <div class="product">
-            <img src="images/corrector.jpg" alt="Cuaderno">
-            <h3>Corrector</h3>
-            <p>$45</p>
-            <div class="quantity">
-                <label>Cantidad: </label>
-                <input type="number" min="0" value="0" class="qty">
-            </div>
-            <button class="addToCartBtn">
-                <i class="fas fa-cart-plus"></i> Agregar
-            </button>
-        </div>
-
-        <div class="product">
-            <img src="images/marcatexto.jpg" alt="Cuaderno">
-            <h3>Marcatextos</h3>
-            <p>$45</p>
-            <div class="quantity">
-                <label>Cantidad: </label>
-                <input type="number" min="0" value="0" class="qty">
-            </div>
-            <button class="addToCartBtn">
-                <i class="fas fa-cart-plus"></i> Agregar
-            </button>
-        </div>
-
-        <div class="product">
-            <img src="images/calculadora.jpg" alt="Cuaderno">
-            <h3>Calculadora</h3>
-            <p>$45</p>
-            <div class="quantity">
-                <label>Cantidad: </label>
-                <input type="number" min="0" value="0" class="qty">
-            </div>
-            <button class="addToCartBtn">
-                <i class="fas fa-cart-plus"></i> Agregar
-            </button>
-        </div>
-
-        <div class="product">
-            <img src="images/tijeras.jpg" alt="Cuaderno">
-            <h3>Tijeras</h3>
-            <p>$45</p>
-            <div class="quantity">
-                <label>Cantidad: </label>
-                <input type="number" min="0" value="0" class="qty">
-            </div>
-            <button class="addToCartBtn">
-                <i class="fas fa-cart-plus"></i> Agregar
-            </button>
-        </div>
-
-        <div class="product">
-            <img src="images/geometria.jpg" alt="Cuaderno">
-            <h3>Juego de geometria</h3>
-            <p>$45</p>
-            <div class="quantity">
-                <label>Cantidad: </label>
-                <input type="number" min="0" value="0" class="qty">
-            </div>
-            <button class="addToCartBtn">
-                <i class="fas fa-cart-plus"></i> Agregar
-            </button>
-        </div>
-
-        <div class="product">
-            <img src="images/resistol.jpg" alt="Cuaderno">
-            <h3>Resitol</h3>
-            <p>$45</p>
-            <div class="quantity">
-                <label>Cantidad: </label>
-                <input type="number" min="0" value="0" class="qty">
-            </div>
-            <button class="addToCartBtn">
-                <i class="fas fa-cart-plus"></i> Agregar
-            </button>
-        </div>
-
-    </section>
-
-    
-   <!-- CARRITO DESLIZANTE -->
-    <div id="cartSidebar" class="cart-sidebar" aria-hidden="true" role="dialog" aria-label="Carrito de compra">
-
-        <div class="cart-header">
-            <h2><i class="fas fa-shopping-cart" aria-hidden="true"></i> Tu Carrito</h2>
-            <span id="closeCart" class="close" role="button" aria-label="Cerrar carrito">&times;</span>
-        </div>
-
-        <!-- CONTENEDOR QUE SCROLLEA -->
-        <div class="cart-content">
-            <ul id="cartList" aria-live="polite"></ul>
-            <h3>Total: $<span id="total">0.00</span></h3>
-        </div>
-
-        <!-- FOOTER FIJO (nombre corregido para coincidir con CSS) -->
-        <div class="cart-footer-fixed">
-            <button id="clearCartBtn" class="clearCartBtn" aria-label="Vaciar carrito">
-                <i class="fas fa-trash" aria-hidden="true"></i> Vaciar carrito
-            </button>
-
-            <a id="sendWhatsapp" target="_blank" rel="noopener noreferrer" aria-label="Enviar pedido por WhatsApp">
-                <button class="whatsappBtn">
-                    <i class="fab fa-whatsapp" aria-hidden="true"></i> Enviar pedido por WhatsApp
-                </button>
-            </a>
-        </div>
-
+<header>
+    <div class="logo">
+        <h1><i class="fas fa-pencil-alt"></i> Papelería Moderna</h1>
     </div>
+    <!-- Botón de carrito redirige a carrito.html -->
+    <a href="carrito.html" class="cart-button">
+        <i class="fas fa-shopping-cart"></i> Carrito (<span id="cartCount">0</span>)
+    </a>
+</header>
 
-    <!-- JS local -->
-    <script src="script.js"></script>
+<!-- HERO -->
+<section class="hero">
+    <h2>Todo lo que necesitas para tu oficina y estudio</h2>
+    <p>Productos de calidad, entrega rápida y atención personalizada.</p>
+</section>
+
+<!-- BUSCADOR -->
+<section class="search">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Buscar producto..." aria-label="Buscar producto">
+    </div>
+</section>
+
+<!-- PRODUCTOS -->
+<section class="products">
+    <!-- Los productos se cargarán automáticamente desde productos.json -->
+</section>
+
+<footer>
+    <p>&copy; 2025 Jose Hernandez. Todos los derechos reservados.</p>
+</footer>
+
+<!-- JS local -->
+<script src="script.js"></script>
 
 </body>
 </html>

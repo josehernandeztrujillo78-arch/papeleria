@@ -1,0 +1,19 @@
+[
+  { "nombre": "Cuaderno Profesional", "precio": 45, "imagen": "images/cuaderno.jpg" },
+  { "nombre": "Lapiceros", "precio": 12, "imagen": "images/plumas.jpg", "colores": ["Azul","Negro","Rojo","Verde"] },
+  { "nombre": "Colores 24 pzs", "precio": 75, "imagen": "images/colores.jpg" },
+  { "nombre": "Marcadores", "precio": 65, "imagen": "images/marcadores.jpg", "colores": ["Azul","Negro","Rojo","Verde"] },
+  { "nombre": "Sacapuntas", "precio": 45, "imagen": "images/sacapuntas.jpg" },
+  { "nombre": "Borrador", "precio": 10, "imagen": "images/borrador.jpg" },
+  { "nombre": "Lapiz", "precio": 45, "imagen": "images/lapiz.jpg" },
+  { "nombre": "Corrector", "precio": 45, "imagen": "images/corrector.jpg" },
+  { "nombre": "Marcatextos", "precio": 23, "imagen": "images/marcatexto.jpg" },
+  { "nombre": "Calculadora", "precio": 45, "imagen": "images/calculadora.jpg" },
+  { "nombre": "Tijeras", "precio": 45, "imagen": "images/tijeras.jpg" },
+  { "nombre": "Juego de geometria", "precio": 45, "imagen": "images/geometria.jpg" },
+  { "nombre": "Resitol", "precio": 25, "imagen": "images/resistol.jpg" },
+  { "nombre": "Papel bond", "precio": 20, "imagen": "images/bond.jpg" },
+  { "nombre": "Carpeta", "precio": 3, "imagen": "images/carpeta.jpg" }
+
+]
+

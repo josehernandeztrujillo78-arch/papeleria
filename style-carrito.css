@@ -1,0 +1,244 @@
+/* RESET BÁSICO */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.5;
+}
+
+/* HEADER */
+header {
+    background-color: #4a90e2;
+    color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.5rem;
+}
+
+header a.cart-button {
+    background-color: #357ab8;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+
+header a.cart-button:hover {
+    background-color: #2a5f8b;
+}
+
+/* MAIN */
+main {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+#cartList {
+    list-style: none;
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+/* PRODUCTOS DEL CARRITO */
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.product-info {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-info .name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-info .price {
+    font-size: 0.85rem;
+    color: #555;
+    margin-top: 2px;
+}
+
+.quantity-buttons {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: center;
+}
+
+.quantity-buttons button {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    border: none;
+    background-color: #4a90e2;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.quantity-buttons button:hover {
+    background-color: #357ab8;
+}
+
+.quantity-buttons span {
+    min-width: 24px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.item-total {
+    flex: 1;
+    text-align: right;
+    font-weight: 600;
+}
+
+/* TOTAL */
+h3.total {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* BOTONES GENERALES */
+#clearCartBtn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    font-size: 1rem;
+    padding: 12px 18px;
+    border-radius: 8px;
+    width: 100%;
+    margin-bottom: 15px;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
+#clearCartBtn:hover {
+    background-color: #c0392b;
+}
+
+#sendWhatsapp button {
+    background-color: #25d366;
+    color: #fff;
+    border: none;
+    font-size: 1rem;
+    padding: 12px 18px;
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.1s, box-shadow 0.2s;
+    outline: none; /* elimina el outline por defecto */
+}
+
+/* Hover: cambia de color ligeramente */
+#sendWhatsapp button:hover {
+    background-color: #1ebe57;
+}
+
+/* Focus: indicador accesible sin la raya azul */
+#sendWhatsapp button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.5); /* borde verde suave */
+}
+
+/* Active: efecto de “presionado” */
+#sendWhatsapp button:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+
+/* ================== RESPONSIVE CELULARES ================== */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.3rem;
+    }
+
+    #cartList li {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .quantity-buttons {
+        justify-content: flex-start;
+        margin-top: 8px;
+    }
+
+    h3.total {
+        font-size: 1.2rem;
+    }
+
+    #clearCartBtn, #sendWhatsapp button {
+        font-size: 0.95rem;
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.1rem;
+    }
+
+    header a.cart-button {
+        font-size: 0.8rem;
+        padding: 8px 10px;
+    }
+
+    .quantity-buttons button {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+
+    .product-info .name {
+        font-size: 0.95rem;
+    }
+
+    .product-info .price {
+        font-size: 0.85rem;
+    }
+
+    h3.total {
+        font-size: 1.1rem;
+    }
+}

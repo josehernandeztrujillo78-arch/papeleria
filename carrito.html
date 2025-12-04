@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<title>Tu Carrito - Papelería Moderna</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style-carrito.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<header>
+  <h1><i class="fas fa-shopping-cart"></i> Tu Carrito</h1>
+  <a href="index.html" class="cart-button">Seguir comprando</a>
+</header>
+
+<main>
+  <ul id="cartList"></ul>
+  <h3 class="total">Total: $<span id="total">0.00</span></h3>
+  <button id="clearCartBtn"><i class="fas fa-trash"></i> Vaciar carrito</button>
+  <a id="sendWhatsapp" target="_blank">
+    <button><i class="fab fa-whatsapp"></i> Enviar pedido por WhatsApp</button>
+  </a>
+</main>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("carrito")) || [];
+const cartList = document.getElementById("cartList");
+const totalEl = document.getElementById("total");
+const clearCartBtn = document.getElementById("clearCartBtn");
+const sendWhatsapp = document.getElementById("sendWhatsapp");
+const phone = "+523313990776";
+const phoneClean = phone.replace(/\D/g,"");
+
+function updateCartDisplay() {
+  cartList.innerHTML = "";
+  let total = 0;
+
+  cart.forEach((p,index)=>{
+    total += p.price * p.qty;
+    const li = document.createElement("li");
+    li.className = "cart-item";
+    li.innerHTML = `
+      <div class="product-info">
+        <span class="name">${p.key}</span>
+        <span class="price">$${p.price.toFixed(2)}</span>
+      </div>
+      <div class="quantity-buttons">
+        <button onclick="changeQty(${index}, -1)">-</button>
+        <span>${p.qty}</span>
+        <button onclick="changeQty(${index}, 1)">+</button>
+      </div>
+      <div class="item-total">$${(p.price*p.qty).toFixed(2)}</div>
+    `;
+    cartList.appendChild(li);
+  });
+
+  totalEl.innerText = total.toFixed(2);
+
+  if(cart.length === 0) sendWhatsapp.href = `https://wa.me/${phoneClean}`;
+  else {
+    let msg = "Hola! Me gustaría pedir:\n";
+    cart.forEach(p=>msg+=`- ${p.key} x${p.qty} ($${p.price.toFixed(2)} c/u) - $${(p.price*p.qty).toFixed(2)}\n`);
+    msg += `Total: $${total.toFixed(2)}`;
+    sendWhatsapp.href = `https://wa.me/${phoneClean}?text=${encodeURIComponent(msg)}`;
+  }
+
+  localStorage.setItem("carrito", JSON.stringify(cart));
+}
+
+function changeQty(index, delta){
+  cart[index].qty += delta;
+  if(cart[index].qty <= 0) cart.splice(index,1);
+  updateCartDisplay();
+}
+
+clearCartBtn.addEventListener("click", ()=>{
+  cart = [];
+  updateCartDisplay();
+});
+
+window.addEventListener("DOMContentLoaded", updateCartDisplay);
+</script>
+
+</body>
+</html>

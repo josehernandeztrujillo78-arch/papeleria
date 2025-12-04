@@ -1,5 +1,5 @@
 /* =========================
-   🔵 VARIABLES PREMIUM
+   VARIABLES GLOBALES
 ========================= */
 :root {
     --font-primary: 'Poppins', sans-serif;
@@ -15,10 +15,12 @@
     --shadow-medium: 0 12px 35px rgba(0,0,0,0.12);
     --shadow-hover: 0 25px 45px rgba(0,0,0,0.18);
     --transition-default: all 0.4s cubic-bezier(.25,.8,.25,1);
+    --safe-bottom: env(safe-area-inset-bottom);
+    --safe-top: env(safe-area-inset-top);
 }
 
 /* =========================
-   🔵 BODY
+   BODY
 ========================= */
 body {
     margin: 0;
@@ -26,10 +28,11 @@ body {
     background: var(--color-bg);
     color: var(--color-text);
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
 }
 
 /* =========================
-   🔵 HEADER
+   HEADER
 ========================= */
 header {
     background: url('images/fondo.jpg') center/cover no-repeat;
@@ -48,43 +51,36 @@ header::before {
     content: "";
     position: absolute;
     inset: 0;
-    background-color: #01010a4d;
+    background-color: rgba(1,1,10,0.3);
     border-radius: inherit;
     z-index: 0;
 }
 
-header > * {
-    position: relative;
-    z-index: 1;
-}
+header > * { position: relative; z-index: 1; }
 
 #cartBtn {
-  background: var(--color-accent);
-  border: none;
-  padding: 12px 18px;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font-weight: 600;
-  transition: all 0.35s ease;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0); /* Fix Safari */
-  touch-action: manipulation;
-  position: relative; /* NORMAL por defecto */
+    background: var(--color-accent);
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: var(--transition-default);
+    transform: translateZ(0);
 }
 
-/* Hover normal en desktop */
 #cartBtn:hover {
-  background: #f1c40f;
-  transform: scale(1.05);
+    background: #f1c40f;
+    transform: scale(1.05);
 }
 
 /* =========================
-   🟢 HERO
+   HERO
 ========================= */
 .hero {
     text-align: center;
@@ -96,266 +92,28 @@ header > * {
 }
 
 .hero h2 {
-    margin-bottom: 15px;
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 700;
+    margin-bottom: 15px;
 }
 
 .hero p {
     font-size: 20px;
+    max-width: 650px;
+    margin: 0 auto;
 }
 
-/* =========================
-   🟢 PRODUCTOS
-========================= */
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px;
-    padding: 50px 20px;
-}
-
-.product {
-    background: white;
-    padding: 25px 20px;
+/* HERO BANNER OPCIONAL */
+.hero-banner img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
     border-radius: 15px;
-    text-align: center;
-    box-shadow: var(--shadow-light);
-    transition: 0.3s ease;
-}
-
-.product:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-hover);
-}
-
-.product img {
-    width: 70%;
-    max-width: 160px;
-    height: 160px;
-    object-fit: contain;
-    margin: 0 auto 15px;
-    border-radius: 12px;
-    transition: 0.3s ease;
-}
-
-.product img:hover {
-    transform: scale(1.05);
-}
-
-.product .quantity {
-    margin: 12px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.product input.qty {
-    width: 65px;
-    padding: 6px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    text-align: center;
-    margin-left: 5px;
-}
-
-.product button {
-    margin-top: 15px;
-    background: var(--color-primary);
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: var(--transition-default);
-    margin-inline: auto;
-}
-
-.product button:hover {
-    background: #1a4dc4;
-    transform: translateY(-3px) scale(1.05);
+    margin-top: 25px;
 }
 
 /* =========================
-   🟣 CARRITO DESLIZANTE
-========================= */
-.cart-sidebar {
-    position: fixed;
-    top: 0;
-    right: -100%;
-
-    /* Altura compatible con TODOS los móviles */
-    height: 100vh;       /* fallback */
-    height: 100svh;      /* iPhone Safari */
-    height: 100lvh;      /* Android moderno */
-
-    width: 100%;
-    max-width: 420px;
-
-    background: white;
-    box-shadow: -3px 0 25px rgba(0,0,0,0.2);
-    transition: right 0.4s ease;
-    z-index: 1000;
-
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-
-    overflow-y: auto; /* scroll real */
-}
-
-.cart-sidebar.active {
-    right: 0;
-}
-
-/* ===============================
-   🟣 HEADER DEL CARRITO
-================================ */
-
-.cart-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.cart-header .close {
-    font-size: 28px;
-    cursor: pointer;
-    color: var(--color-danger);
-    transition: 0.2s;
-}
-
-.cart-header .close:hover {
-    transform: rotate(90deg);
-}
-
-/* ===============================
-   🟣 LISTA DEL CARRITO
-================================ */
-
-#cartList {
-    flex: 1;
-    overflow-y: auto;
-    padding-right: 5px;
-
-    /* espacio real para que NO tape el footer */
-    padding-bottom: 160px; /* ajustado */
-}
-
-/* ===============================
-   🟣 ITEMS
-================================ */
-
-#cartList li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid #eee;
-    flex-wrap: wrap;
-}
-
-#cartList li .product-info {
-    flex: 1;
-    margin-right: 12px;
-    display: flex;
-    flex-direction: column;
-    word-break: break-word;
-}
-
-#cartList li .name {
-    font-weight: 700;
-    font-size: 16px;
-    color: var(--color-primary);
-}
-
-#cartList li .price {
-    font-size: 14px;
-    color: #555;
-}
-
-/* BOTONES DE CANTIDAD */
-.quantity-buttons {
-    display: flex;
-    gap: 6px;
-}
-
-.quantity-buttons button {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 1px solid #ddd;
-    background: #f9f9f9;
-    color: var(--color-primary);
-    font-size: 18px;
-    cursor: pointer;
-}
-
-/* ================================
-      ⭐ FOOTER FIJO MOBILE-FRIENDLY
-================================ */
-
-.cart-footer-fixed {
-    position: sticky; /* ← funciona perfecto en cualquier teléfono */
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    width: 100%;
-    max-width: inherit;
-
-    background: white;
-    padding: 15px 20px;
-
-    box-shadow: 0 -5px 15px rgba(0,0,0,0.15);
-
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
-    z-index: 2000;
-}
-
-/* BOTÓN WHATSAPP */
-.whatsappBtn {
-    background: var(--color-whatsapp);
-    width: 100%;
-    padding: 16px;
-    border: none;
-    color: white;
-    font-size: 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-/* LIMPIAR CARRITO */
-.clearCartBtn {
-    background: var(--color-danger);
-    color: white;
-    width: 100%;
-    padding: 14px;
-    border: none;
-    font-size: 16px;
-    border-radius: 8px;
-}
-
-/* ================================
-   🔹 RESPONSIVE FULL MOBILE WIDTH
-================================ */
-@media (max-width: 700px) {
-    .cart-sidebar,
-    .cart-footer-fixed {
-        width: 100% !important;
-        max-width: 100% !important;
-    }
-}
-
-
-/* =========================
-   🔍 BUSCADOR
+   BUSCADOR
 ========================= */
 .search {
     width: 100%;
@@ -385,100 +143,228 @@ header > * {
     padding: 14px 18px 14px 50px;
     border-radius: 12px;
     border: 2px solid #00a884;
-    background: #fdfdfd;
+    background: #fff;
     font-size: 16px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-light);
     transition: 0.25s ease;
 }
 
 .search-box input:focus {
     outline: none;
     border-color: #028d75;
-    background: #fff;
     box-shadow: 0 4px 12px rgba(0,168,132,0.25);
 }
 
-/* ==== FIX UNIVERSAL PARA SAFARI - IOS - ANDROID ==== */
-
-/* Evita zoom automático en inputs y botones */
-input, button, select, textarea {
-  font-size: 16px !important;
+/* =========================
+   PRODUCTOS
+========================= */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    padding: 50px 20px;
 }
 
-/* Evita desplazamientos laterales en Safari */
-html, body {
-  max-width: 100%;
-  overflow-x: hidden;
-  -webkit-text-size-adjust: 100%;
+.product {
+    background: #fff;
+    padding: 25px 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    transition: var(--transition-default);
 }
 
-/* Botón del carrito centrado y con tamaño estable en iOS */
-#cartBtn.cart-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  -webkit-transform: translateZ(0); /* Fix Safari animación */
-  transform: translateZ(0);
-  touch-action: manipulation; /* Previene delay al tocar */
+.product:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
+
+.product img {
+    width: 70%;
+    max-width: 160px;
+    height: 160px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    transition: 0.3s ease;
+}
+
+.product img:hover { transform: scale(1.05); }
+
+.product .quantity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 12px 0;
+}
+
+.product input.qty {
+    width: 65px;
+    padding: 6px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+    margin-left: 5px;
+}
+
+.product button {
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-default);
+}
+
+.product button:hover {
+    background: #1a4dc4;
+    transform: translateY(-3px) scale(1.05);
+}
+
+/* =========================
+   FOOTER FIJO MOBILE-FRIENDLY
+========================= */
+.cart-footer-fixed {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: #fff;
+    padding: 15px 20px;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 2000;
+}
+
+/* =========================
+   MEDIA QUERIES
+========================= */
+@media (max-width: 768px) {
+    .hero h2 { font-size: 28px; }
+    .hero p { font-size: 18px; }
+    .product img { height: 140px; }
+}
+
+@media (max-width: 480px) {
+    header { padding: 15px 20px; }
+    .hero h2 { font-size: 24px; }
+    .hero p { font-size: 16px; }
+    .products { grid-template-columns: 1fr; gap: 20px; }
+    .product img { height: 120px; }
+    #cartBtn { font-size: 14px; padding: 10px 14px; }
+}
+
+/* carrito */
+.cart-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 10px 18px;
+    border-radius: 30px;
+    text-decoration: none;
+    box-shadow: var(--shadow-light);
+    transition: var(--transition-default);
+    position: relative;
+    cursor: pointer;
+}
+
+/* Hover dinámico con degradado y lift */
+.cart-button:hover {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Icono dentro del botón */
+.cart-button i {
+    font-size: 18px;
+}
+
+/* Contador del carrito - estilo moderno sin paréntesis */
+.cart-button #cartCount {
+    background: var(--color-accent);
+    color: #000;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 2px 8px;
+    border-radius: 50%;
+    display: inline-block;
+    min-width: 20px;
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    transition: var(--transition-default);
+    margin-left: 4px; /* separación del icono */
+}
+
+/* Ajustes responsive */
+@media (max-width: 480px) {
+    .cart-button {
+        font-size: 14px;
+        padding: 8px 14px;
+        gap: 6px;
+    }
+
+    .cart-button i {
+        font-size: 16px;
+    }
+
+    .cart-button #cartCount {
+        font-size: 12px;
+        min-width: 18px;
+        padding: 2px 6px;
+    }
+}
+
+/* Sticky carrito en la página */
+.cart-button {
+    position: fixed;
+    top: 20px;      /* distancia desde arriba */
+    right: 20px;    /* distancia desde la derecha */
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: background 0.3s;
+}
+
+.cart-button:hover {
+    background-color: #0056b3;
 }
 
 
-/* Imagen del banner ajustada correctamente */
-.hero-banner img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 15px;
+footer {
+    background-color: #4a90e2; /* mismo azul que el header */
+    color: #fff;
+    text-align: center;
+    padding: 15px 20px;
+    font-size: 0.9rem;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
 }
 
-/* Contenedor del banner adaptado */
-.hero-banner {
-  width: 100%;
-  max-width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
+footer p {
+    margin: 0;
 }
 
-/* Corrección para que Safari no aumente el tamaño del texto */
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Corrección de borde redondeado en scroll en iOS */
-:root {
-  --safe-bottom: env(safe-area-inset-bottom);
-  --safe-top: env(safe-area-inset-top);
-}
-
-/* ==== BOTÓN FLOTANTE DEL CARRITO (solo en móvil) ==== */
-
-#cartBtn {
-  transition: all 0.35s ease;
-}
-
-#cartBtn.show-fixed {
-  position: fixed;
-  bottom: calc(20px + var(--safe-area-inset-bottom, 0px));
-  right: 20px;
-  z-index: 2000;
-  background: var(--color-accent);
-  box-shadow: 0px 10px 25px rgba(0,0,0,0.25);
-  padding: 16px 22px;
-  border-radius: 50px;
-  font-size: 18px;
-}
-
-/* Icono animado */
-#cartBtn.show-fixed i {
-  transform: scale(1.1);
-}
-
-/* versión más compacta en móvil */
-@media (max-width: 650px) {
-  #cartBtn.show-fixed {
-    font-size: 15px;
-    padding: 14px 20px;
-  }
+/* Responsivo para móviles */
+@media (max-width: 480px) {
+    footer {
+        font-size: 0.8rem;
+        padding: 12px 15px;
+    }
 }
